@@ -1,0 +1,9 @@
+package com.securitySB3.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.securitySB3.dto.AuthRequest;
+
+public interface loginRepo extends JpaRepository<AuthRequest, Integer> {
+
+}

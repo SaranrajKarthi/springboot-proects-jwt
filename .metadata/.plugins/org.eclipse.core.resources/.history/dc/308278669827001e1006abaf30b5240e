@@ -1,0 +1,49 @@
+package com.securitySB3.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.securitySB3.entity.Register_User;
+import com.securitySB3.service.JwtService;
+import com.securitySB3.service.UserService;
+
+@RestController
+@RequestMapping("/api")
+public class Register_Controller {
+	@Autowired
+	UserService userService;
+
+//	@Autowired
+	JwtService jwtService;
+
+	 @GetMapping("/register")
+	    public String showRegisterForm(Model model) {
+	        model.addAttribute("registerUser", new Register_User());
+	        return "register_form";
+	    }
+	
+	@PostMapping("/register")
+	public String addUser(@ModelAttribute Register_User reg_user, Model m) {
+		Register_User userExist = userService.getUserByUsername(reg_user.getUserName());
+
+		if (userExist != null) {
+			m.addAttribute("errorMessage", "User is already exists");
+			return "errorMessage";
+		}
+
+		String token = jwtService.generateToken(reg_user.getUserName());
+		reg_user.setToken(token);
+
+		userService.saveOrUpdate(reg_user);
+
+		return "Successfull";
+
+	}
+}

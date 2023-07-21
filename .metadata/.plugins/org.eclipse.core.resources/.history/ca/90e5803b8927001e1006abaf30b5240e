@@ -1,0 +1,10 @@
+package com.securitySB3.repo;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.securitySB3.dto.AuthRequest;
+import com.securitySB3.entity.Register_User;
+
+public interface loginRepo extends JpaRepository<Register_User, Integer> {
+
+}

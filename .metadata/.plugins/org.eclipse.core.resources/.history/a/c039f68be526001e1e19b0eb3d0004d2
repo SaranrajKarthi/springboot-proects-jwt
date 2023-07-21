@@ -1,0 +1,5 @@
+package com.securitySB3.repo;
+
+public interface loginRepo {
+
+}

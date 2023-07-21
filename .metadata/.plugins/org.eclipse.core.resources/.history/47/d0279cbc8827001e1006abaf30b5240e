@@ -1,0 +1,29 @@
+package com.securitySB3.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.securitySB3.entity.Register_User;
+import com.securitySB3.service.JwtService;
+import com.securitySB3.service.UserService;
+
+
+@RestController
+public class Register_Controller {
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	JwtService jwtService;
+
+	public String addUser(@ModelAttribute Register_User reg_log, Model m) {
+		List<Register_User> lists = userService.getAllReglog(null);
+		m.addAttribute("userprofile",lists);
+		userService.saveOrUpdate(reg_log);
+		return "successfull";
+}
+}

@@ -1,0 +1,40 @@
+package com.securitySB3.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.securitySB3.entity.Register_User;
+import com.securitySB3.service.JwtService;
+import com.securitySB3.service.UserService;
+
+
+@RestController
+public class Register_Controller {
+	@Autowired
+	UserService userService;
+	
+//	@Autowired
+	JwtService jwtService;
+
+	public String addUser(@ModelAttribute Register_User reg_user, Model m) {
+		Register_User userExist = userService.getUserByUsername(reg_user.getUserName());
+		
+		if(userExist != null) {
+			m.addAttribute("errorMessage","User is already exists");
+			return "errorMessage";
+		}
+		
+		String token= jwtService.generateToken(reg_user.getUserName());
+		reg_user.setToken(token);
+		
+		userService.saveOrUpdate(reg_user);
+		
+		return"Successfull";
+		
+		
+	}
+}

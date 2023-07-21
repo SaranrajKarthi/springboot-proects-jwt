@@ -1,0 +1,7 @@
+server.port=8085
+spring.datasource.url=jdbc:mysql://127.0.0.1/BeepDatabase
+spring.datasource.username=root
+spring.datasource.password=Sonita@123
+spring.jpa.hibernate.ddl-auto=create
+
+secretKey=root
